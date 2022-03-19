@@ -112,6 +112,10 @@ let keyFX_3;
 let keyFX_4;
 let openMusic;
 
+let desPick = 0;
+let hysPick = 0;
+let ragePick =0;
+
 function preload() {
   imageData = loadTable(
     "Nias_RTA82A_DataBase - DATABASEv3.csv",
@@ -1463,12 +1467,9 @@ function rageDisplay() {
   imageMode(CORNER);
   image(rageFilm, width / 3, 0, 400, 400);
   
-  let ragePick = int(random(0,2));
-  
-  switch(ragePick){
-      
-    case 0:
-      rageText[0] =
+  //let ragePick = int(random(0,2));
+
+    rageText[0] =
     fname +
     " " +
     lname +
@@ -1486,28 +1487,6 @@ function rageDisplay() {
     "At least at the times you are angry and defiant of what is happening around you.";
   rageText[4] =
     "Take this as a sign to recognize the types of things in your life that you want to change or bring you great frustration.";
-    break;
-    
-    case 1:
-      rageText[0] =
-    fname +
-    " " +
-    lname +
-    " gets the " +
-    imageData.getString(imageIndex, "AnimName") +
-    " as their Rage Alignment.";
-  rageText[1] = "What does " + imageData.getString(imageIndex, "Noun") + " mean to you?";
-  rageText[2] = "Maybe nothing at all right now.";
-  rageText[3] =
-    imageData.getString(imageIndex, "Interjection") + "This will collide with " + imageData.getString(imageIndex, "Noun 2") + ".";
-  rageText[4] =
-    "But that's the point in this alignment, isn't it?";
-      break;
-      
-      
-      
-  }
-
 
   displayText(rageText, c);
 
@@ -1533,26 +1512,7 @@ function hysteriaDisplay() {
   rect(0, 0, width, height);
   imageMode(CORNER);
   image(hysteriaFilm, width / 3, 0, 400, 400);
-  
-  let hysPick = int(random(0,2));
-  
-  switch(hysPick){
-      
-    case 0:
-      hysteriaText[0] =
-    fname +
-    " " +
-    lname +
-    " gets the " +
-    imageData.getString(imageIndex1, "AnimName") +
-    " as their Hysteria Alignment.";
-  hysteriaText[1] = "This might feel like a dead end, like you have no control over thr situation.";
-  hysteriaText[2] = "You might think - 'well what does, '" + imageData.getString(imageIndex1, "Verb(ing)" + " do?");
-  hysteriaText[3] = "But it does plenty.";
-  hysteriaText[4] = "You're doing great.";
-    break;
-    
-    case 1:
+   
       hysteriaText[0] =
     fname +
     " " +
@@ -1575,11 +1535,6 @@ function hysteriaDisplay() {
     imageData.getString(imageIndex1, "State of being") +
     " whilst doing this thought exercise? So many questions, " +
     imageData.getString(imageIndex1, "Interjection");
-      break;
-      
-      
-      
-  }
 
   //println(hysteriaText[0]);
   displayText(hysteriaText, c);
@@ -1608,11 +1563,7 @@ function despairDisplay() {
   imageMode(CORNER);
   image(despairFilm, width / 3, 0, 400, 400);
   
-  let desPick = int(random(0,2));
-  
-  switch(desPick){
-      
-    case 0:
+
       despairText[0] =
     fname +
     " " +
@@ -1640,27 +1591,6 @@ function despairDisplay() {
     imageData.getString(imageIndex2, "Emotion") +
     " you feel, that feeling will change too. And somehow it will all be okay.";
   despairText[6] = imageData.getString(imageIndex2, "Affirming Phrase");
-    break;
-    
-    case 1:
-      despairText[0] =
-    fname +
-    " " +
-    lname +
-    " gets the " +
-    imageData.getString(imageIndex2, "AnimName") +
-    " as their Despair Alignment.";
-  despairText[1] = "You must be feeling " + imageData.getString(imageIndex2, "Emotion");
-  despairText[2] = "And that's okay, folks on the red planet felt that too in their state of " + imageData.getString(imageIndex2, "State of Being 2") + ".";
-  despairText[3] = "In these moments allow yourself to be " + imageData.getString(imageIndex2, "Adjective 2");
-  despairText[4] = "No, really.";
-  despairText[5] = "All will pass.";
-  despairText[6] = imageData.getString(imageIndex2, "Affirming Phrase");
-      
-      
-      
-  }
-
   
   //println(despairText[0]);
   displayText(despairText, c);
