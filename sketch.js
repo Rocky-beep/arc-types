@@ -5,15 +5,11 @@
 //https://www.youtube.com/watch?v=x_i9Rg3Ki54
 
 //TODO - HAVE TOs
-//replacing opening text w/ tabs for each alignment
-//the weird doubling
-//BG music 
+//alt text adlibs 
 
 //LIKE TOs
-//enter name BLACK BLOCKS issue
-//interactive text elements
 //animated || dissolving loading screens
-//FORWARD, BACK screens
+//loading screen fade to white
 
 let imageData;
 let rw = new p5.TableRow();
@@ -109,6 +105,12 @@ let notSavedHysteria = true;
 let notSavedDespair = true;
 
 let loadingMusic;
+let clickFX;
+let keyFX;
+let keyFX_2;
+let keyFX_3;
+let keyFX_4;
+let openMusic;
 
 function preload() {
   imageData = loadTable(
@@ -121,6 +123,14 @@ function preload() {
 
   soundFormats("wav");
   loadingMusic = loadSound("itsBroken.wav");
+  openMusic = loadSound("Scanner-Electronic-Bell-with-Random-Distortion-Spikes_COMM-1532.wav");
+  clickFX = loadSound("compClick.wav");
+  keyFX = loadSound("ElectronicBeep PS01_63_1.wav");
+  keyFX_2 = loadSound("ElectronicBeep PS01_64_1.wav");
+  keyFX_3 = loadSound("ElectronicBeep PS01_65_1.wav");
+  keyFX_4 = loadSound("ComputerKeyboardH IE03_30_1.wav");
+  
+  
 }
 
 function setup() {
@@ -132,6 +142,8 @@ function setup() {
   tableCount = imageData.getRowCount();
 
   typing = "";
+  
+  loadingFilm = createVideo("loadingMovie_fin.mp4");
 }
 
 function draw() {
@@ -157,6 +169,7 @@ function draw() {
 
     textAlign(LEFT); //
     textFont(fnt); //
+    strokeWeight(0);
     textSize(15);
     fill(0); //
     text(typing, width / 3 - 50, height / 2); //
@@ -164,7 +177,7 @@ function draw() {
 
   if (phaseNum == 3) {
     if (loadingX < width / 2) {
-      loadingX++;
+      loadingX+= 0.7;
       print("\n");
       print(loadingX);
       doneLoading = false;
@@ -188,7 +201,7 @@ function displayText(arry, c) {
 
   for (let i = 0; i < arry.length; i++) {
     if (
-      (saturation(c) > 35 && brightness(c) < 90) ||
+      (saturation(c) > 35 && brightness(c) < 80) ||
       (saturation(c) == 0 && brightness(c) == 0)
     ) {
       fill(360, 0, 100); //white text
@@ -1253,7 +1266,18 @@ function getName() {
 }
 
 function opening() {
+  
+  let phaseTextX = width/2;
+  
+  let rY = height / 2 - 100;
+  
+  let hY = height / 2;
+  
+  let dY = height / 2 + 100;
+  
   colorMode(RGB, 255, 255, 255);
+  
+  let phaseClrs = [130,230,0];
 
   fill(0);
   rectMode(CORNER);
@@ -1267,33 +1291,85 @@ function opening() {
   text("THE ANARCHIST GALAXY is a world beyond Earth.", 0, 80);
   textSize(20);
   text(
-    "All the creatures and worlds that have ever existed are viewed under three major aspects. ",
-    10,
-    120
-  );
+    "All the creatures and worlds that have ever existed are viewed under three major aspects. ", 10,120);
+  
+  
+  
+  
+  //PHASES
+  
+  textAlign(CENTER);
+  colorMode(HSB, 360 ,100, 100);
+  textSize(30);
 
-  text("Rage - Defiance and Rebellion", 20, height / 2 - 100);
+  //text("Rage - Defiance and Rebellion", rX, rY);
+  
+  if(dist(mouseX, mouseY, phaseTextX, rY) < 30){
+     fill(130,100,75);
+     text("[ Rage ]", phaseTextX, rY);
+    
+    
+    rectMode(CENTER);
+     rect(phaseTextX - 420, dY - 10, 500, 100);
+     fill(255);
+     textSize(25);
+     text("Defiance and Rebellion", phaseTextX - 420, dY - 10);
+  } else {
+     fill(255);
+     text("Rage", phaseTextX, rY);
+  }
+  
+  //Questioning and Hyper-Vigilance
+  
+  if(dist(mouseX, mouseY, phaseTextX, hY) < 30){
+     fill(230,100,100);
+     text("[ Hysteria ]", phaseTextX, hY);
+    
+    rectMode(CENTER);
+     rect(phaseTextX - 420, dY - 10, 500, 100);
+     fill(255);
+     textSize(25);
+     text("Questioning and Hyper-Vigilance", phaseTextX - 400, dY - 10);
+    
+  } else {
+     fill(255);
+     text("Hysteria", phaseTextX, hY);
+  }
+  
+  //Demise and Destruction 
+  
+  if(dist(mouseX, mouseY, phaseTextX, dY) < 30){
+     fill(0,100,100);
+     text("[ Despair ]", phaseTextX, dY);
+     
+     rectMode(CENTER);
+     rect(phaseTextX - 420, dY - 10, 500, 100);
+     fill(255);
+     textSize(25);
+     text("Demise and Destruction ", phaseTextX - 400, dY - 10);
+  } else {
+     fill(255);
+     text("Despair", phaseTextX, dY);
+  }
 
-  text("Hysteria - Questioning and Hyper-Vigilance", 20, height / 2);
+  
+  
+  
+  
+  //CLOSING
+  
+  textAlign(LEFT);
+  textSize(20);
+  colorMode(RGB, 255, 255, 255);
+  fill(255);
 
-  text("Despair - Demise and Destruction", 20, height / 2 + 100);
-
+  text("The GBR planet went through these three major phases of change, ",20,180);
+  
   text(
-    "The GBR planet went through these three major phases of change, ",
-    20,
-    180
-  );
-  text(
-    "named after how the creatures responded to the initial discovery of TEEF the Eye-dol.",
-    20,
-    220
-  );
+    "named after how the creatures responded to the initial discovery of TEEF the Eye-dol.",20,220);
 
-  text(
-    "The Eye-dol inspired these three major feelings -- ",
-    20,
-    height / 2 + 230
-  );
+  text("The Eye-dol inspired these three major feelings -- ",20,height / 2 + 230);
+  
   text(
     " and everything that existed in the galaxy since then came from these creatures",
     20,
@@ -1375,8 +1451,10 @@ function rageDisplay() {
   image(rageFilm, 0, 0, 400, 400);
 
   colorMode(RGB);
-  let c = get(0, 0);
+  let c = get(0, 20);
   print("CLR: " + c);
+  
+  print("X: " + mouseX + "Y: " + mouseY);
 
   rectMode(CORNER);
   noStroke();
@@ -1419,7 +1497,7 @@ function hysteriaDisplay() {
   image(hysteriaFilm, 0, 0, 400, 400);
 
   colorMode(RGB);
-  let c = get(0, 0);
+  let c = get(0, 20);
   print("CLR: " + c);
 
   rectMode(CORNER);
@@ -1468,7 +1546,7 @@ function despairDisplay() {
   image(despairFilm, 0, 0, 400, 400);
 
   colorMode(RGB);
-  let c = get(0, 0);
+  let c = get(0, 20);
   print("CLR: " + c);
 
   rectMode(CORNER);
@@ -1516,32 +1594,47 @@ function despairDisplay() {
 }
 
 function loading() {
-  let h = 200;
-  colorMode(HSB, 360, 100, 100);
+  
+  let g1 = 0;
+  let b1 = 0;
+  let b2 = 0;
+  
+  //colorMode(HSB, 360, 100, 100);
+  colorMode(RGB, 255, 255, 255);
   let c = color(0, 0, 100);
 
   m = millis() / 1000;
+  
+  //new screen 
 
   fill(0);
   rectMode(CORNER);
   rect(0, 0, width, height);
+  
+  imageMode(CORNER);
+  image(loadingFilm,0,0,width,height);
+  loadingFilm.loop();
+  
+  //text
 
-  fill(0, 100, 100);
+  fill(255);
   textSize(30);
   text(loadingText, width / 2 - 60, height / 2 - 20);
+  
+  //loading bar
 
   noStroke();
-  fill(60, 100, 100);
+  fill(255);
   rectMode(CORNER);
   rect(width / 4, height / 2, loadingX, 40);
 
   noFill();
   strokeWeight(10);
-  stroke(360, 100, 100);
+  stroke(255);
   rectMode(CENTER);
   rect(width / 2, height / 2 + 20, width / 2, 40);
 
-  loadingMusic.rate(1.2);
+  loadingMusic.rate(1.0);
 
   if (loadingMusic.isPlaying() == false) {
     loadingMusic.play();
@@ -1616,6 +1709,33 @@ function menuPicker() {
 }
 
 function keyPressed() {
+  
+  let vol = 0.3;
+  
+  //key fx
+  switch(int(random(1,5))){
+      
+    case 1:
+      keyFX.setVolume(vol);
+      keyFX.play();
+      break;
+      
+    case 2:
+      keyFX_2.setVolume(vol);
+      keyFX_2.play();
+      break;
+    
+    case 3:
+      keyFX_3.setVolume(vol);
+      keyFX_3.play();
+      break;
+      
+    case 4:
+      keyFX_4.setVolume(vol);
+      keyFX_4.play();  
+  }
+  
+  //typing name
   if (typeMenu == true) {
     //if the return key is pressed, save string and clear it
     if (keyCode == ENTER && typing != "") {
@@ -1640,6 +1760,7 @@ function keyPressed() {
       typing = typing + key;
     }
   }
+  
 }
 
 function mousePressed() {
@@ -1647,5 +1768,6 @@ function mousePressed() {
     phaseNum = 0;
   } else {
     phaseNum++;
+    clickFX.play();
   }
 }
