@@ -1006,9 +1006,15 @@ function phonicCipher(x, y) {
 }
 
 function pick(index) {
-  targId = []; //in place of intlist, collecting all the options
+   targId = []; //in place of intlist, collecting all the options
 
   let primIndex; //the number choosing all the things
+  let origIndex = index; //the index is equal to whatever it is now, thus retaining the original MASH # 
+  
+  //varying where the game of MASH will start!!!!!!
+  index = index + round(random(-2,5));
+  
+  print("new MASH #: " + index); 
 
   if (index > primSubjects.length - 1) {
     //# - the largest the index
@@ -1030,10 +1036,20 @@ function pick(index) {
     print("\n");
     print(targId);
   } //works :D, great job
+  
+  index = origIndex;
 
   print("XXXXXXXXXXXXXXX");
 
   let clrIndex;
+  origIndex = index; //the index is equal to whatever it is now, thus retaining the original MASH # 
+  
+  //varying where the game of MASH will start!!!!!!
+  index = index + round(random(-2,5));
+  
+  print("new MASH #: " + index); 
+  
+  
   if (index > colours.length - 1) {
     clrIndex = index - colours.length;
     while (clrIndex > colours.length - 1) {
@@ -1075,6 +1091,13 @@ function pick(index) {
   print(" ");
 
   let spaceIndex;
+  origIndex = index; //the index is equal to whatever it is now, thus retaining the original MASH # 
+  
+  //varying where the game of MASH will start!!!!!!
+  index = index + round(random(-2,5));
+  
+  print("new MASH #: " + index);
+  
   if (index > space.length - 1) {
     spaceIndex = index - space.length;
   } else {
@@ -1111,6 +1134,14 @@ function pick(index) {
   print(" ");
 
   let motifIndex;
+  origIndex = index; //the index is equal to whatever it is now, thus retaining the original MASH # 
+  
+  //varying where the game of MASH will start!!!!!!
+  index = index + round(random(-2,5));
+  
+  print("new MASH #: " + index);
+  
+  
   if (index > shiannMotifs.length - 1) {
     motifIndex = index - shiannMotifs.length;
   } else {
@@ -1147,6 +1178,12 @@ function pick(index) {
   print(" ");
 
   let shapeIndex;
+  origIndex = index; //the index is equal to whatever it is now, thus retaining the original MASH # 
+  
+  //varying where the game of MASH will start!!!!!!
+  index = index + round(random(-2,5));
+  
+  print("new MASH #: " + index);
 
   if (index > shapeForm.length - 1) {
     shapeIndex = index - shapeForm.length;
