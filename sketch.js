@@ -169,7 +169,9 @@ function draw() {
     text("Type Your Name", width / 2, height / 2 + 50);
     text("ex. Billy [SPACE] Smith", width / 2, height / 2 + 80);
     text("When Your Done, hit ENTER", width / 2, height / 2 + 110);
-    text("& then Click", width / 2, height / 2 + 140);
+    
+    fill(60,100,100);
+    text("[ Results will be saved as IMAGE FILES. ]", width / 2, height / 2 + 170);
 
     textAlign(LEFT); //
     textFont(fnt); //
@@ -1006,7 +1008,8 @@ function phonicCipher(x, y) {
 }
 
 function pick(index) {
-   targId = []; //in place of intlist, collecting all the options
+
+  targId = []; //in place of intlist, collecting all the options
 
   let primIndex; //the number choosing all the things
   let origIndex = index; //the index is equal to whatever it is now, thus retaining the original MASH # 
@@ -1448,6 +1451,15 @@ function nameProcessing() {
     ab = fname.charAt(firstLength - 1);
     ba = lname.charAt(0);
     bb = lname.charAt(lastLength - 1);
+    
+    print(aa);
+    print(ab);
+    print(ba);
+    print(bb);
+    
+    nameEntered = false;
+    
+    videoGetter();
   }
 }
 
@@ -1482,7 +1494,7 @@ function videoGetter() {
   despairFilm = createVideo(despairFilmName);
   despairFilm.loop();
 
-  phaseNum++;
+  phaseNum = 3;
 }
 
 function rageDisplay() {
@@ -1578,6 +1590,7 @@ function hysteriaDisplay() {
   //text(hysteriaText, 10, height - 20);
 
   if (notSavedHysteria == true) {
+    print("SAVING THIS");
     save(fname + "_" + lname + "_HYSTERIA.png");
     notSavedHysteria = false;
   }
@@ -1648,8 +1661,6 @@ function loading() {
   //colorMode(HSB, 360, 100, 100);
   colorMode(RGB, 255, 255, 255);
   let c = color(0, 0, 100);
-
-  m = millis() / 1000;
   
   //new screen 
 
@@ -1659,7 +1670,7 @@ function loading() {
   
   imageMode(CORNER);
   image(loadingFilm,0,0,width,height);
-  loadingFilm.loop();
+  //loadingFilm.play();
   
   //text
 
@@ -1700,11 +1711,11 @@ function endScreen() {
   textSize(15);
   text("Thank you", width / 2, height / 2);
   text(" -from Space", width / 2 + 20, height / 2 + 50);
-  text("Run Again?", width / 2, height / 2 + 100);
 }
 
 function menuPicker() {
   switch (phaseNum) {
+      
     case 0:
       notSavedRage = true;
       notSavedHysteria = true;
@@ -1713,6 +1724,7 @@ function menuPicker() {
       doneLoading = false;
       print("OPENING");
       opening();
+      print("The next phase will be: " + (phaseNum + 1));
       break;
 
     case 1:
@@ -1723,7 +1735,7 @@ function menuPicker() {
 
     case 2:
       print("Getting animation");
-      videoGetter(); //runs in a loop why?
+      //videoGetter(); //runs in a loop why?
       break;
 
     case 3:
@@ -1789,8 +1801,7 @@ function keyPressed() {
       saved = typing;
       nameEntered = true;
       typing = "";
-      //otherwise, concatenate the String
-      //phaseNum++;
+      
     } else if (keyCode == SHIFT) {
       print("shift");
     } else if (keyCode == BACKSPACE) {
@@ -1806,12 +1817,15 @@ function keyPressed() {
       typing = typing + key;
     }
   }
+
   
 }
 
 function mousePressed() {
   if (phaseNum >= 7) {
-    phaseNum = 0;
+    phaseNum = 7;
+  } else if(phaseNum == 1 || phaseNum == 3){
+    phaseNum = phaseNum;
   } else {
     phaseNum++;
     clickFX.play();
