@@ -134,7 +134,6 @@ function preload() {
   keyFX_3 = loadSound("ElectronicBeep PS01_65_1.wav");
   keyFX_4 = loadSound("ComputerKeyboardH IE03_30_1.wav");
   
-  
 }
 
 function setup() {
@@ -147,7 +146,10 @@ function setup() {
 
   typing = "";
   
-  loadingFilm = createVideo("loadingMovie_fin.mp4");
+  loadingFilm = loadImage("loading_" + int(random(1,13)) + ".png"); 
+  
+  //loadingFilm = createVideo("loadingMovie_fin.mp4");
+  //loadingFilm = loadImage("loading_" + random(1,10));
 }
 
 function draw() {
@@ -310,7 +312,7 @@ function ayePath(aa, ab, ba, bb) {
     enneaNegative = "tortured soul";
   }
 
-  let diceRoll = round(random(1, 6));
+  let diceRoll = int(random(1, 6));
   print("\n");
   print("dice: " + diceRoll);
 
@@ -1017,6 +1019,10 @@ function pick(index) {
   //varying where the game of MASH will start!!!!!!
   index = index + round(random(-2,5));
   
+  if(index < 0){
+    index = 0;
+  }
+  
   print("new MASH #: " + index); 
 
   if (index > primSubjects.length - 1) {
@@ -1234,6 +1240,7 @@ function pick(index) {
 
   return getResult(targId);
 }
+
 function getResult(targId) {
   print("\n");
   print("WE'RE BAILING");
@@ -1245,9 +1252,19 @@ function getResult(targId) {
   print("\n");
   print("ID number of target Image is: " + indexResult);
 
-  let result = imageData.findRow(indexResult, "ID");
+  let result = imageData.findRow(indexResult, "ID"); /////////////////
 
-  print(imageData.getString(indexResult, "AnimName"));
+  print(imageData.getString(indexResult, "AnimName")); ////////////////
+  
+  //The error is happening at result = find the row. I wonder if the image result or the random targetID section is zero and you have some empty array or file, then it breaks. You may have to print line what targId.length is as I have a feeling it is empty. You just need to make an if statement to look for an empty here, and then make some code to randomly grab some stuff or change your search so it always gets data.
+  
+  print("LENGTH OF ARRAY: " + targId.length);
+  
+  if(targId.length == 0){
+    print("using the fail safe!");
+    indexResult = random(0,imageData.length + 1);
+  }
+
 
   return indexResult;
 }
@@ -1435,8 +1452,14 @@ function opening() {
 }
 
 function nameProcessing() {
+  
+  //text("Please Type Again", width / 2, height / 2 + 190);
+  //phaseNum = 1;
+  
   if (nameEntered == true) {
+    
     let n = split(saved, " ");
+  
 
     fname = n[0].toLowerCase();
     print("first name " + fname);
@@ -1452,6 +1475,17 @@ function nameProcessing() {
     ba = lname.charAt(0);
     bb = lname.charAt(lastLength - 1);
     
+    if(firstLength == 0 || lastLength == 0 ||  /^[a-zA-Z]+$/.test(aa) == false ||  /^[a-zA-Z]+$/.test(ab) == false ||  /^[a-zA-Z]+$/.test(ba) == false ||  /^[a-zA-Z]+$/.test(bb) == false){ //if its not a letter or is blank 
+      
+      fill(360,100,100);
+      text("Please Type Again", width / 2, height / 2 + 190);
+      text("Cannot read SYMBOLS or NUMBERS", width / 2, height / 2 + 230);
+      text("Minimun ONE letter for First and Last name", width / 2, height / 2 + 250);
+      
+      typeMenu = true;
+      
+    } else {
+      
     print(aa);
     print(ab);
     print(ba);
@@ -1461,7 +1495,9 @@ function nameProcessing() {
     
     videoGetter();
   }
-}
+  }
+} 
+
 
 function videoGetter() {
   ayeMash = ayePath(aa, ab, ba, bb); //returns index of each characteristic;
@@ -1669,6 +1705,7 @@ function loading() {
   rect(0, 0, width, height);
   
   imageMode(CORNER);
+  
   image(loadingFilm,0,0,width,height);
   //loadingFilm.play();
   
@@ -1711,6 +1748,7 @@ function endScreen() {
   textSize(15);
   text("Thank you", width / 2, height / 2);
   text(" -from Space", width / 2 + 20, height / 2 + 50);
+  text("Click to Run Again", width / 2 + 20, height / 2 + 100);
 }
 
 function menuPicker() {
@@ -1734,6 +1772,7 @@ function menuPicker() {
       break;
 
     case 2:
+      typeMenu = false;
       print("Getting animation");
       //videoGetter(); //runs in a loop why?
       break;
@@ -1823,7 +1862,7 @@ function keyPressed() {
 
 function mousePressed() {
   if (phaseNum >= 7) {
-    phaseNum = 7;
+    phaseNum = 0;
   } else if(phaseNum == 1 || phaseNum == 3){
     phaseNum = phaseNum;
   } else {
