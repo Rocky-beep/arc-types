@@ -221,6 +221,8 @@ function displayText(arry, c) {
 
     x += 50; //15 = single space
   }
+  
+  text("[ Click to Continue ]", width / 2 - 150, height / 2 + 360);
 }
 
 function ayePath(aa, ab, ba, bb) {
